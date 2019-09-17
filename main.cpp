@@ -28,10 +28,21 @@ int Init(coordinates &kek)
 	return 0;
 }
 
+//Процедура вывода на экран
+int Display(coordinates &kek)
+{
+	cout << "degrees = " << kek.degrees;
+	cout << " minutes = " << kek.minutes;
+	cout << " seconds = " << kek.seconds << endl;
+}
+
 int main()
 {
-	coordinates one, two;
+	coordinates one;
 	Init(one);
+
+	cout << "One: ";
+	Display(one);
 
 	return 0;
 }
