@@ -1,11 +1,11 @@
-/* @autor Rakhmanin Danila aka Radist AltSTU PI-82
+п»ї/* @autor Rakhmanin Danila aka Radist AltSTU PI-82
  *
- * Разработать тип данных и набор процедур для работы с ним
- * (не использовать конструкции ООП, желательно использовать язык С, использовать Git)
+ * Р Р°Р·СЂР°Р±РѕС‚Р°С‚СЊ С‚РёРї РґР°РЅРЅС‹С… Рё РЅР°Р±РѕСЂ РїСЂРѕС†РµРґСѓСЂ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РЅРёРј
+ * (РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РєРѕРЅСЃС‚СЂСѓРєС†РёРё РћРћРџ, Р¶РµР»Р°С‚РµР»СЊРЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ СЏР·С‹Рє РЎ, РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Git)
  *
- * 18. Класс координаты точки на карте состоит из трех вещественных полей (градусы, минуты и секунды).
- * Реализовать метод округления до градусов и вычисления координат точки, находящейся на середине отрезка,
- * соединяющего две другие точки (метод называется add).
+ * 18. РљР»Р°СЃСЃ РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РѕС‡РєРё РЅР° РєР°СЂС‚Рµ СЃРѕСЃС‚РѕРёС‚ РёР· С‚СЂРµС… РІРµС‰РµСЃС‚РІРµРЅРЅС‹С… РїРѕР»РµР№ (РіСЂР°РґСѓСЃС‹, РјРёРЅСѓС‚С‹ Рё СЃРµРєСѓРЅРґС‹).
+ * Р РµР°Р»РёР·РѕРІР°С‚СЊ РјРµС‚РѕРґ РѕРєСЂСѓРіР»РµРЅРёСЏ РґРѕ РіСЂР°РґСѓСЃРѕРІ Рё РІС‹С‡РёСЃР»РµРЅРёСЏ РєРѕРѕСЂРґРёРЅР°С‚ С‚РѕС‡РєРё, РЅР°С…РѕРґСЏС‰РµР№СЃСЏ РЅР° СЃРµСЂРµРґРёРЅРµ РѕС‚СЂРµР·РєР°,
+ * СЃРѕРµРґРёРЅСЏСЋС‰РµРіРѕ РґРІРµ РґСЂСѓРіРёРµ С‚РѕС‡РєРё (РјРµС‚РѕРґ РЅР°Р·С‹РІР°РµС‚СЃСЏ add).
  */
 
 
@@ -20,7 +20,7 @@ struct coordinates
 	float seconds;
 };
 
-//Процедура инициализации
+//РџСЂРѕС†РµРґСѓСЂР° РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
 int Init(coordinates &kek)
 {
 	cout << "Init data." << endl;
@@ -28,15 +28,16 @@ int Init(coordinates &kek)
 	return 0;
 }
 
-//Процедура вывода на экран
+//РџСЂРѕС†РµРґСѓСЂР° РІС‹РІРѕРґР° РЅР° СЌРєСЂР°РЅ
 int Display(coordinates &kek)
 {
 	cout << "degrees = " << kek.degrees;
 	cout << " minutes = " << kek.minutes;
 	cout << " seconds = " << kek.seconds << endl;
+	return 0;
 }
 
-//Процедура ввода с клавиатуры
+//РџСЂРѕС†РµРґСѓСЂР° РІРІРѕРґР° СЃ РєР»Р°РІРёР°С‚СѓСЂС‹
 int Read(coordinates &kek)
 {
 	cout << "Write degrees: ";
@@ -47,11 +48,23 @@ int Read(coordinates &kek)
 
 	cout << "Write seconds: ";
 	cin >> kek.seconds;
+	return 0;
 }
+
+//РЎСЂРµРґРЅСЏСЏ С‚РѕС‡РєР° Рј/Рґ РґРІСѓС… С‚РѕС‡РµРє
+int Add(coordinates &kek, coordinates &lol, coordinates &chebyrek)
+{
+	chebyrek.degrees = (kek.degrees + lol.degrees) / 2;
+	chebyrek.minutes = (kek.minutes + lol.minutes) / 2;
+	chebyrek.seconds = (kek.seconds + lol.seconds) / 2;
+	return 0;
+}
+
+
 
 int main()
 {
-	coordinates one, two;
+	coordinates one, two, three;
 	Init(one);
 	cout << "Write two:" << endl;
 	Read(two);
@@ -60,6 +73,10 @@ int main()
 	Display(one);
 	cout << "Two: ";
 	Display(two);
+
+	Add(one, two, three);
+	cout << "Three: ";
+	Display(three);
 
 	return 0;
 }
