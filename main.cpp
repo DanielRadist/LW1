@@ -60,7 +60,17 @@ int Add(coordinates &kek, coordinates &lol, coordinates &chebyrek)
 	return 0;
 }
 
+//округление до градусов
+int Round(coordinates &kek)
+{
+	if(kek.seconds >= 30)
+		kek.minutes += 1;
+	if(kek.minutes >= 30)
+		kek.degrees += 1;
 
+	kek.seconds = kek.minutes = 0;
+	return 0;
+}
 
 int main()
 {
@@ -76,6 +86,10 @@ int main()
 
 	Add(one, two, three);
 	cout << "Three: ";
+	Display(three);
+
+	Round(three);
+	cout << "Round Three: ";
 	Display(three);
 
 	return 0;
