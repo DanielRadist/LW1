@@ -1,7 +1,7 @@
 ﻿/* @autor Rakhmanin Danila aka Radist AltSTU PI-82
  *
  * Разработать тип данных и набор процедур для работы с ним
- * (не использовать конструкции ООП, желательно использовать язык С, использовать Git)
+ * (использовать ООП, использовать Git)
  *
  * 18. Класс координаты точки на карте состоит из трех вещественных полей (градусы, минуты и секунды).
  * Реализовать метод округления до градусов и вычисления координат точки, находящейся на середине отрезка,
@@ -13,84 +13,79 @@
 
 using namespace std;
 
-struct coordinates
+class coordinates
 {
-	float degrees;
-	float minutes;
-	float seconds;
+private:
+	float degrees, minutes, seconds;
+public:
+	//Процедура инициализации
+	int Init()
+	{
+		cout << "Init data." << endl;
+		degrees = minutes = seconds = 0;
+		return 0;
+	}
+	//Процедура вывода на экран
+	int Display()
+	{
+		cout << "degrees = " << degrees;
+		cout << " minutes = " << minutes;
+		cout << " seconds = " << seconds << endl;
+		return 0;
+	}
+	//Процедура ввода с клавиатуры
+	int Read()
+	{
+		cout << "Write degrees: ";
+		cin >> degrees;
+
+		cout << "Write minutes: ";
+		cin >> minutes;
+
+		cout << "Write seconds: ";
+		cin >> seconds;
+		return 0;
+	}
+	//Средняя точка м/д двух точек
+	int Add(coordinates &kek, coordinates &lol)
+	{
+		degrees = (kek.degrees + lol.degrees) / 2;
+		minutes = (kek.minutes + lol.minutes) / 2;
+		seconds = (kek.seconds + lol.seconds) / 2;
+		return 0;
+	}
+	//округление до градусов
+	int Round()
+	{
+		if(seconds >= 30)
+			minutes += 1;
+		if(minutes >= 30)
+			degrees += 1;
+
+		seconds = minutes = 0;
+		return 0;
+	}
 };
-
-//Процедура инициализации
-int Init(coordinates &kek)
-{
-	cout << "Init data." << endl;
-	kek.degrees = kek.minutes = kek.seconds = 0;
-	return 0;
-}
-
-//Процедура вывода на экран
-int Display(coordinates &kek)
-{
-	cout << "degrees = " << kek.degrees;
-	cout << " minutes = " << kek.minutes;
-	cout << " seconds = " << kek.seconds << endl;
-	return 0;
-}
-
-//Процедура ввода с клавиатуры
-int Read(coordinates &kek)
-{
-	cout << "Write degrees: ";
-	cin >> kek.degrees;
-
-	cout << "Write minutes: ";
-	cin >> kek.minutes;
-
-	cout << "Write seconds: ";
-	cin >> kek.seconds;
-	return 0;
-}
-
-//Средняя точка м/д двух точек
-int Add(coordinates &kek, coordinates &lol, coordinates &chebyrek)
-{
-	chebyrek.degrees = (kek.degrees + lol.degrees) / 2;
-	chebyrek.minutes = (kek.minutes + lol.minutes) / 2;
-	chebyrek.seconds = (kek.seconds + lol.seconds) / 2;
-	return 0;
-}
-
-//округление до градусов
-int Round(coordinates &kek)
-{
-	if(kek.seconds >= 30)
-		kek.minutes += 1;
-	if(kek.minutes >= 30)
-		kek.degrees += 1;
-
-	kek.seconds = kek.minutes = 0;
-	return 0;
-}
 
 int main()
 {
 	coordinates one, two, three;
-	Init(one);
+	one.Init();
 	cout << "Write two:" << endl;
-	Read(two);
+	two.Read();
 
 	cout << "One: ";
-	Display(one);
+	one.Display();
 	cout << "Two: ";
-	Display(two);
+	two.Display();
 
-	Add(one, two, three);
+	three.Add(one, two);
 	cout << "Three: ";
-	Display(three);
+	three.Display();
 
-	Round(three);
+	three.Round();
 	cout << "Round Three: ";
-	Display(three);
+	three.Display();
 
 	return 0;
 }
