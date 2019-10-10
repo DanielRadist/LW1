@@ -18,23 +18,28 @@ class coordinates
 private:
 	float degrees, minutes, seconds;
 public:
-	//Процедура инициализации
-	int Init()
+
+	~coordinates()
 	{
-		cout << "Init data." << endl;
-		degrees = minutes = seconds = 0;
-		return 0;
+
+	}
+
+	//Процедура инициализации
+	void init(int degress, int minutes, int seconds)
+	{
+		this->degrees = degress;
+		this->minutes = minutes;
+		this->seconds = seconds;
 	}
 	//Процедура вывода на экран
-	int Display()
+	void display()
 	{
 		cout << "degrees = " << degrees;
 		cout << " minutes = " << minutes;
 		cout << " seconds = " << seconds << endl;
-		return 0;
 	}
 	//Процедура ввода с клавиатуры
-	int Read()
+	void read()
 	{
 		cout << "Write degrees: ";
 		cin >> degrees;
@@ -44,18 +49,16 @@ public:
 
 		cout << "Write seconds: ";
 		cin >> seconds;
-		return 0;
 	}
 	//Средняя точка м/д двух точек
-	int Add(coordinates &kek, coordinates &lol)
+	void add(coordinates &kek, coordinates &lol)
 	{
 		degrees = (kek.degrees + lol.degrees) / 2;
 		minutes = (kek.minutes + lol.minutes) / 2;
 		seconds = (kek.seconds + lol.seconds) / 2;
-		return 0;
 	}
 	//округление до градусов
-	int Round()
+	void round()
 	{
 		if(seconds >= 30)
 			minutes += 1;
@@ -63,29 +66,36 @@ public:
 			degrees += 1;
 
 		seconds = minutes = 0;
-		return 0;
 	}
 };
 
 int main()
 {
-	coordinates one, two, three;
-	one.Init();
+	coordinates *oneAndTwo = new coordinates[2];
+	coordinates *three = new coordinates;
+
+
+	oneAndTwo[0].init(20, 15, 45);
+
 	cout << "Write two:" << endl;
-	two.Read();
+	oneAndTwo[1].read();
 
 	cout << "One: ";
-	one.Display();
+	oneAndTwo[0].display();
 	cout << "Two: ";
-	two.Display();
+	oneAndTwo[1].display();
 
-	three.Add(one, two);
+
+	three->add(oneAndTwo[0], oneAndTwo[1]);
 	cout << "Three: ";
-	three.Display();
+	three->display();
 
-	three.Round();
+	three->round();
 	cout << "Round Three: ";
-	three.Display();
+	three->display();
+
+	delete [] oneAndTwo;
+	delete three;
 
 	return 0;
 }
