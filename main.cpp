@@ -17,12 +17,9 @@ class Coordinates
 {
 private:
 	float degrees, minutes, seconds;
+private:
+	static float infelicity;		//погрешность
 public:
-
-	~Coordinates()
-	{
-
-	}
 
 	//Процедура инициализации
 	void init(int degress, int minutes, int seconds)
@@ -30,6 +27,16 @@ public:
 		this->degrees = degress;
 		this->minutes = minutes;
 		this->seconds = seconds;
+	}
+
+	//lw10 статический метод
+	static void setInfelicity(float value)
+	{
+		infelicity = value;
+	}
+	static float getInfelicity()
+	{
+		return infelicity;
 	}
 
 	//Методы по получению значений
@@ -108,8 +115,15 @@ void round(Coordinates &value)		//lw8 дружественная функция
 	value.seconds = value.minutes = 0;
 }
 
+float Coordinates::infelicity;
+
 int main()
 {
+	//lw10
+	Coordinates::setInfelicity(1.5);
+	cout << "Infelicity: " << Coordinates::getInfelicity() << endl;
+
+
 	Coordinates *oneAndTwo = new Coordinates[2];
 	Coordinates *three = new Coordinates;
 
