@@ -13,13 +13,13 @@
 
 using namespace std;
 
-class coordinates
+class Coordinates
 {
 private:
 	float degrees, minutes, seconds;
 public:
 
-	~coordinates()
+	~Coordinates()
 	{
 
 	}
@@ -31,6 +31,33 @@ public:
 		this->minutes = minutes;
 		this->seconds = seconds;
 	}
+
+	//Методы по получению значений
+	float getDegrees()
+	{
+		return degrees;
+	}
+	float getMinutes()
+	{
+		return minutes;
+	}
+	float getSeconds()
+	{
+		return seconds;
+	}
+	//lw8 Методы по получению значений по адресу и ссылке
+	void getMinutes(float *value)
+	{
+		*value = minutes;
+	}
+	void getSeconds(float &value)
+	{
+		value = seconds;
+	}
+
+
+
+
 	//Процедура вывода на экран
 	void display()
 	{
@@ -51,11 +78,11 @@ public:
 		cin >> seconds;
 	}
 	//Средняя точка м/д двух точек
-	void add(coordinates &kek, coordinates &lol)
+	void add(Coordinates &kek, Coordinates &lol)
 	{
-		degrees = (kek.degrees + lol.degrees) / 2;
-		minutes = (kek.minutes + lol.minutes) / 2;
-		seconds = (kek.seconds + lol.seconds) / 2;
+		this->degrees = (kek.degrees + lol.degrees) / 2;
+		this->minutes = (kek.minutes + lol.minutes) / 2;
+		this->seconds = (kek.seconds + lol.seconds) / 2;
 	}
 	//округление до градусов
 	void round()
@@ -67,12 +94,24 @@ public:
 
 		seconds = minutes = 0;
 	}
+
+	friend void round(Coordinates &value);
 };
+
+void round(Coordinates &value)		//lw8 дружественная функция
+{
+	if(value.seconds >= 30)
+		value.minutes += 1;
+	if(value.minutes >= 30)
+		value.degrees += 1;
+
+	value.seconds = value.minutes = 0;
+}
 
 int main()
 {
-	coordinates *oneAndTwo = new coordinates[2];
-	coordinates *three = new coordinates;
+	Coordinates *oneAndTwo = new Coordinates[2];
+	Coordinates *three = new Coordinates;
 
 
 	oneAndTwo[0].init(20, 15, 45);
