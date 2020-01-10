@@ -21,12 +21,15 @@ private:
 	static float infelicity;		//погрешность
 public:
 
-	//Процедура инициализации
-	void init(int degress, int minutes, int seconds)
+	//инициализация
+	Coordinates(int degress, int minutes, int seconds)
 	{
 		this->degrees = degress;
 		this->minutes = minutes;
 		this->seconds = seconds;
+	}
+	Coordinates()
+	{
 	}
 
 	//lw10 статический метод
@@ -124,22 +127,20 @@ int main()
 	cout << "Infelicity: " << Coordinates::getInfelicity() << endl;
 
 
-	Coordinates *oneAndTwo = new Coordinates[2];
-	Coordinates *three = new Coordinates;
+	Coordinates *one = new Coordinates(20, 15, 45);
+	Coordinates *two = new Coordinates(30, 45, 10);
+	Coordinates *three = new Coordinates();
 
-
-	oneAndTwo[0].init(20, 15, 45);
 
 	cout << "Write two:" << endl;
-	oneAndTwo[1].read();
+	//oneAndTwo[1].read();
 
 	cout << "One: ";
-	oneAndTwo[0].display();
+	one->display();
 	cout << "Two: ";
-	oneAndTwo[1].display();
+	two->display();
 
-
-	three->add(oneAndTwo[0], oneAndTwo[1]);
+	three->add(*one, *two);
 	cout << "Three: ";
 	three->display();
 
@@ -147,7 +148,8 @@ int main()
 	cout << "Round Three: ";
 	three->display();
 
-	delete [] oneAndTwo;
+	delete one;
+	delete two;
 	delete three;
 
 	return 0;
