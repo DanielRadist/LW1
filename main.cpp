@@ -9,20 +9,21 @@
  */
 
 
+
 #include <iostream>
 
 using namespace std;
 
 class Coordinates
 {
-private:
+protected:
 	float degrees, minutes, seconds;
-private:
+protected:
 	static float infelicity;		//погрешность
 public:
 
 	//инициализация
-	Coordinates(int degress, int minutes, int seconds)
+	Coordinates(float degress, float minutes, float seconds)
 	{
 		this->degrees = degress;
 		this->minutes = minutes;
@@ -30,6 +31,7 @@ public:
 	}
 	Coordinates()
 	{
+
 	}
 
 	//lw10 статический метод
@@ -65,7 +67,13 @@ public:
 		value = seconds;
 	}
 
-
+	//Инициализация
+	void init(float degrees, float minutes, float seconds)
+	{
+		this->degrees = degrees;
+		this->minutes = minutes;
+		this->seconds = seconds;
+	}
 
 
 	//Процедура вывода на экран
@@ -120,19 +128,96 @@ void round(Coordinates &value)		//lw8 дружественная функция
 
 float Coordinates::infelicity;
 
+/*
+ * lw12
+ * В 18.
+ * п. 1 В производный класс добавлено целое (или булевское) поле, равное 1 (северной широты) или -1 (южной долготы).
+ * п. 3 При округлении до градусов (целое число) учитывается расположении точки на полушариях.
+ * п.6 При присваивании объекту производного класса объекта базового класса дополнительному полю присваивается -1 , если градусов меньше 10 и 1, в противном случае.
+ */
+
+class CoordinatesNSEW : protected Coordinates
+{
+private:
+	int NSEW;
+public:
+
+	CoordinatesNSEW(int NSEW, float degrees, float minutes, float seconds) : Coordinates(degrees, minutes, seconds)
+	{
+		init(NSEW, degrees, minutes, seconds);
+	}
+
+	void init(int NSEW, float degrees, float minutes, float seconds)
+	{
+		Coordinates::init(degrees, minutes, seconds);
+
+		setNSEW(NSEW);
+	}
+
+	void display()
+	{
+		Coordinates::display();
+		cout << "NSEW = " << NSEW << endl;
+	}
+
+	int getNSEW()
+	{
+		return NSEW;
+	}
+	void setNSEW(int value)
+	{
+		if(value == 1 || value == -1)
+			NSEW = value;
+	}
+	void round(bool val)
+	{
+		if(val == true)
+		{
+			if(seconds >= 30)
+				minutes += 1;
+			if(minutes >= 30)
+				degrees += 1;
+
+			seconds = minutes = 0;
+
+			if(NSEW == -1)
+				degrees *= -1;
+		}
+	}
+
+	CoordinatesNSEW operator=(Coordinates val)
+	{
+		this->degrees = val.getDegrees();
+		this->minutes = val.getMinutes();
+		this->seconds = val.getSeconds();
+		this->infelicity = val.getInfelicity();
+		if(val.getDegrees() < 10)
+			this->NSEW = -1;
+		else
+			this->NSEW = 1;
+	}
+};
+
 int main()
 {
 	//lw10
 	Coordinates::setInfelicity(1.5);
 	cout << "Infelicity: " << Coordinates::getInfelicity() << endl;
 
+	CoordinatesNSEW a(1, 16, 8, 9);
+	a.display();
 
 	Coordinates *one = new Coordinates(20, 15, 45);
+
+	a = *one;
+
+	a.display();
+
 	Coordinates *two = new Coordinates(30, 45, 10);
 	Coordinates *three = new Coordinates();
 
 
-	cout << "Write two:" << endl;
+	//cout << "Write two:" << endl;
 	//oneAndTwo[1].read();
 
 	cout << "One: ";
