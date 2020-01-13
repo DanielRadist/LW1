@@ -102,8 +102,11 @@ public:
 		this->minutes = (kek.minutes + lol.minutes) / 2;
 		this->seconds = (kek.seconds + lol.seconds) / 2;
 	}
-	//округление до градусов
-	void round()
+
+
+
+	//виртуальная фнкция округление до градусов
+	virtual void round()
 	{
 		if(seconds >= 30)
 			minutes += 1;
@@ -116,6 +119,7 @@ public:
 	friend void round(Coordinates &value);
 };
 
+/*
 void round(Coordinates &value)		//lw8 дружественная функция
 {
 	if(value.seconds >= 30)
@@ -124,7 +128,7 @@ void round(Coordinates &value)		//lw8 дружественная функция
 		value.degrees += 1;
 
 	value.seconds = value.minutes = 0;
-}
+}*/
 
 float Coordinates::infelicity;
 
@@ -169,20 +173,26 @@ public:
 		if(value == 1 || value == -1)
 			NSEW = value;
 	}
-	void round(bool val)
+
+	void round() override
 	{
-		if(val == true)
-		{
-			if(seconds >= 30)
-				minutes += 1;
-			if(minutes >= 30)
-				degrees += 1;
+		if(seconds >= 30)
+			minutes += 1;
+		if(minutes >= 30)
+			degrees += 1;
 
-			seconds = minutes = 0;
+		seconds = minutes = 0;
 
-			if(NSEW == -1)
-				degrees *= -1;
-		}
+		if(NSEW == -1)
+			degrees *= -1;
+	}
+
+	void editorLW14()
+	{
+		degrees -= int(degrees/5);
+		minutes -= int(minutes/5);
+		seconds -= int(seconds/5);
+		round();
 	}
 
 	CoordinatesNSEW operator=(Coordinates val)
@@ -195,6 +205,7 @@ public:
 			this->NSEW = -1;
 		else
 			this->NSEW = 1;
+		return *this;
 	}
 };
 
@@ -207,11 +218,14 @@ int main()
 	CoordinatesNSEW a(1, 16, 8, 9);
 	a.display();
 
-	Coordinates *one = new Coordinates(20, 15, 45);
+	//Coordinates *one = new Coordinates(20, 15, 45);
+	//a = *one;
 
-	a = *one;
+	a.editorLW14();
 
 	a.display();
+
+	/*
 
 	Coordinates *two = new Coordinates(30, 45, 10);
 	Coordinates *three = new Coordinates();
@@ -219,7 +233,6 @@ int main()
 
 	//cout << "Write two:" << endl;
 	//oneAndTwo[1].read();
-
 	cout << "One: ";
 	one->display();
 	cout << "Two: ";
@@ -235,7 +248,7 @@ int main()
 
 	delete one;
 	delete two;
-	delete three;
+	delete three;*/
 
 	return 0;
 }
